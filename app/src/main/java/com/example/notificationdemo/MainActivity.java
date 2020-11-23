@@ -23,6 +23,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void showNotification(View view)
     {
+        // Create an explicit intent for an Activity in your app
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+        
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
         {
             NotificationChannel notificationChannel = new NotificationChannel(CHANNEL_ID,"001", NotificationManager.IMPORTANCE_DEFAULT);
@@ -35,8 +40,11 @@ public class MainActivity extends AppCompatActivity {
 
             Notification.Builder builder = new Notification.Builder(this, CHANNEL_ID);
             builder.setSmallIcon(R.mipmap.ic_launcher)
-                    .setContentText("New Message")
-                    .setContentTitle("Hello There")
+                    .setContentText("Your SDK Version is Grater then 8(OREO)")
+                    .setContentTitle("AWFKK")
+                    // Set the intent that will fire when the user taps the notification
+                    .setContentIntent(pendingIntent)
+                    .setAutoCancel(true)
                     .setPriority(Notification.PRIORITY_DEFAULT);
 
 
@@ -47,8 +55,11 @@ public class MainActivity extends AppCompatActivity {
             {
                 Notification.Builder builder = new Notification.Builder(this);
                 builder.setSmallIcon(R.mipmap.ic_launcher)
-                        .setContentText("New Message")
-                        .setContentTitle("Your SDK Version is Less then 8(OREO)")
+                        .setContentText("Your SDK Version is Less then 8(OREO)")
+                        .setContentTitle("OREO Message")
+                        // Set the intent that will fire when the user taps the notification
+                        .setContentIntent(pendingIntent)
+                        .setAutoCancel(true)
                         .setPriority(Notification.PRIORITY_DEFAULT);
 
                 NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(this);
